@@ -1,0 +1,1628 @@
+/*
+ * Copyright (c) 2025 ameshima studio
+ * All rights reserved. / 版權所有
+ *
+ * This software is proprietary and confidential.
+ * 本軟體為專有且機密之財產。
+ *
+ * Unauthorized copying, distribution, or use of this file is strictly prohibited.
+ * 嚴禁未經授權複製、分發或使用本檔案。
+ *
+ * This software is NOT provided for free.
+ * 本軟體並非免費提供。
+ */
+
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --secondary: #ec4899;
+    --bg-dark: #0f172a;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(255, 255, 255, 0.5);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+html {
+    overflow-y: scroll;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Noto Sans TC', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #f0f4f8;
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 背景動畫特效區塊 (Background Animation Effects) */
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.blob {
+    position: absolute;
+    filter: blur(80px);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: move 20s infinite alternate;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: #ff9a9e;
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: #a18cd1;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 40%;
+    width: 400px;
+    height: 400px;
+    background: #fbc2eb;
+}
+
+@keyframes move {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+}
+
+/* 主要內容容器設定 (Main Container Layout) */
+/* 主要容器 (Main Container) */
+.container {
+    width: 100%;
+    max-width: 1400px;
+    /* 加寬容器寬度至 1400px */
+    padding: 20px;
+    z-index: 1;
+    margin: 0 auto;
+    /* 置中 */
+}
+
+/* 應用程式標頭區塊 (App Header) */
+.app-header {
+    text-align: center;
+    margin-bottom: 30px;
+    grid-column: 1 / -1;
+    /* 標題跨滿全寬 */
+}
+
+/* 主內容區塊網格佈局 (Main Content Grid) */
+main {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    /* 左側固定 380px，右側自適應充滿 */
+    gap: 32px;
+    align-items: start;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    /* Crucial for Grid/Flex child to shrink for overflow to work */
+}
+
+/* 行動裝置響應式調整 (Mobile Responsive) */
+/* 行動裝置響應式調整 (Mobile Responsive) */
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+        /* 小螢幕切回單欄 */
+    }
+
+    .invoice-preview-section {
+        margin-top: 32px;
+    }
+}
+
+.app-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #4338ca;
+    margin-bottom: 8px;
+}
+
+.app-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* 分頁切換按鈕樣式 (Tabs Styling) */
+.tabs-container {
+    display: flex;
+    position: relative;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(16px);
+    border-radius: 16px;
+    margin-bottom: 24px;
+    padding: 6px;
+    box-shadow: var(--glass-shadow);
+    /* 移除內距以配合下底線樣式 */
+    padding: 0;
+    /* 透明背景 */
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.tab-btn {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 16px 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+}
+
+.tab-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+    transition: color 0.3s;
+}
+
+.tab-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    opacity: 0.8;
+    transition: color 0.3s;
+}
+
+.tab-btn.active .tab-title {
+    color: var(--primary);
+}
+
+.tab-btn.active .tab-subtitle {
+    color: var(--primary);
+}
+
+/* 分頁指示器動畫效果 (Tab Indicator Animation) */
+.tab-indicator {
+    position: absolute;
+    bottom: -2px;
+    /* 覆蓋底部邊框 */
+    left: 0;
+    height: 3px;
+    background: var(--primary);
+    width: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    border-radius: 3px 3px 0 0;
+    transform: translateX(0);
+}
+
+/* 玻璃擬態卡片容器通用樣式 (Glassmorphism Cards) */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: var(--glass-shadow);
+    margin-bottom: 24px;
+}
+
+.section-header {
+    margin-bottom: 24px;
+}
+
+.section-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    /* 增加標題與說明的間距 */
+    margin-right: 0;
+}
+
+.section-hint {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* =========================================
+   買受人區塊樣式 (Buyer Section)
+   包含：統一編號、公司名稱及清除按鈕的佈局
+   ========================================= */
+/* 買受人區域網格佈局 (Buyer Grid) */
+.buyer-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    /* 上方統編全寬，下方公司名稱+清除按鈕 */
+    gap: 12px;
+    align-items: flex-end;
+}
+
+/* 統編輸入框 (第一個子元素) 佔滿整行 */
+.buyer-grid>.input-float-group:first-child {
+    grid-column: 1 / -1;
+    position: relative;
+    z-index: 20;
+}
+
+/* 買受人輸入框靠左對齊 */
+.buyer-grid .input-float-group input {
+    text-align: left;
+}
+
+/* 移除底部邊距以統一卡片內距 */
+.buyer-grid .input-float-group {
+    margin-bottom: 0;
+}
+
+/* 行內清除按鈕 (Clear Button) - 改為透明背景，減少視覺干擾 */
+.clear-btn-inline {
+    height: 56px;
+    width: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    /* 預設透明 */
+    border: 1px solid transparent;
+    /* 預設無邊框 */
+    color: #cbd5e1;
+    /* 淺灰色圖示，非聚焦時降低存在感 */
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.2s;
+    margin-bottom: 0;
+    /* 與輸入框對齊，無額外邊距 */
+}
+
+.clear-btn-inline:hover {
+    background: #fee2e2;
+    /* 懸停時才出現淺紅背景 */
+    color: #ef4444;
+    /* 紅色文字 */
+    border-color: #fecaca;
+}
+
+.clear-btn-inline svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Mobile Responsive Tweaks from Redesign */
+@media (max-width: 640px) {
+
+    /* Optimize card padding for mobile to save space */
+    .card {
+        padding: 20px;
+    }
+
+    /* Buyer Grid: Keep side-by-side layout (Input + Button) instead of stacking */
+    /* This prevents the delete button from becoming a huge full-width block */
+    .buyer-grid {
+        grid-template-columns: 1fr auto;
+        /* Keep inputs and button aligned row-wise */
+        gap: 8px;
+        /* Slightly tighter gap */
+    }
+
+    /* Ensure clear button keeps its square shape and overrides any previous mobile hacks */
+    .clear-btn-inline {
+        width: 56px !important;
+        /* Force square width */
+        margin-top: 0;
+        margin-bottom: 0;
+        flex-shrink: 0;
+        /* Prevent shrinking */
+        align-self: flex-end;
+        /* Align with input */
+    }
+
+    /* Ensure the input group inside the grid matches button height alignment */
+    .buyer-grid .input-float-group {
+        margin-bottom: 0;
+    }
+}
+
+
+/* 輸入框組 (Input Group) */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.input-group label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e2e8f0;
+    background: #fff;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.2s;
+}
+
+/* 橘色邊框樣式 (聚焦時) */
+.input-group input:focus {
+    border-color: #f97316;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+}
+
+/* 驗證錯誤樣式 */
+.input-float-group input.invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.error-msg {
+    display: none;
+    font-size: 0.8rem;
+    color: #ef4444;
+    font-weight: 600;
+    margin-top: 6px;
+    padding-left: 4px;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 0.2s;
+}
+
+.input-float-group input.invalid~.error-msg {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 建議選單容器 */
+.input-wrapper {
+    position: relative;
+}
+
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    max-height: 240px;
+    overflow-y: auto;
+    display: none;
+    margin-top: 4px;
+}
+
+.suggestions-list.show {
+    display: block;
+}
+
+.suggestion-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background: #f8fafc;
+}
+
+.suggestion-item .comp-name {
+    font-weight: 600;
+    color: var(--text-main);
+    display: block;
+}
+
+.suggestion-item .comp-ubn {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* =========================================
+   發票試算區塊樣式 (Invoice Calculator)
+   包含：稅率按鈕、金額輸入框、結果顯示
+   ========================================= */
+/* 發票類型與功能控制列 (Deleted) */
+
+
+.setting-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    display: block;
+}
+
+
+
+/* 稅率選項容器 - 獨立按鈕樣式 */
+#tax-rate-options {
+    background: transparent;
+    border: none;
+    padding: 0;
+    gap: 8px;
+    display: inline-flex;
+}
+
+#tax-rate-options .tax-opt {
+    flex: 1;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: normal;
+    white-space: nowrap;
+}
+
+#tax-rate-options .tax-opt:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: #f8fafc;
+}
+
+#tax-rate-options .tax-opt.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+}
+
+/* 計算機設定輸入框 (Input Float Group) */
+.input-float-group {
+    position: relative;
+    margin-bottom: 24px;
+    z-index: 20;
+}
+
+.input-float-group input {
+    width: 100%;
+    padding: 16px 16px;
+    height: 56px;
+    /* 強制設定高度以與按鈕對齊 */
+    border: 2px solid transparent;
+    background: #f1f5f9;
+    border-radius: 16px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    outline: none;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+/* 隱藏數字輸入框的上下調整按鈕 (Hide Spin Buttons) */
+.input-float-group input[type=number]::-webkit-outer-spin-button,
+.input-float-group input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-float-group input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.input-float-group input:focus {
+    background: #fff;
+    border-color: #f97316;
+    /* 橘色主題 */
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+}
+
+/* RESTORED Floating Label Styles */
+.input-float-group label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+/* Inner Clear Button for Inputs */
+.input-float-group .inner-clear-btn {
+    position: absolute;
+    right: 8px;
+    top: 28px;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.input-float-group input:not(:placeholder-shown)~.inner-clear-btn,
+.input-float-group input:focus~.inner-clear-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.input-float-group .inner-clear-btn:hover {
+    background: #e2e8f0;
+    color: #ef4444;
+}
+
+.input-float-group input:focus~label,
+.input-float-group input:not(:placeholder-shown)~label {
+    top: -10px;
+    left: 8px;
+    font-size: 0.8rem;
+    background: var(--primary);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+/* 試算結果顯示區 (Deleted) */
+
+
+/* 中文大寫數字顯示 */
+.chinese-num-display {
+    text-align: center;
+    font-size: 1.5rem;
+    /* 字體加大 */
+    color: var(--primary);
+    font-weight: 700;
+    /* 加粗 */
+    padding: 16px;
+    background: rgba(79, 70, 229, 0.05);
+    /* 淺藍色背景 */
+    border-radius: 12px;
+    border: 1px dashed rgba(79, 70, 229, 0.3);
+    /* 虛線邊框 */
+    margin-top: 24px;
+}
+
+.chinese-num-display .icon {
+    margin-right: 8px;
+}
+
+/* 手機版響應式調整 */
+@media (max-width: 600px) {
+    .container {
+        padding: 16px;
+        max-width: 100%;
+    }
+
+    .buyer-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .section-header h2 {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .section-hint {
+        display: block;
+    }
+
+    .card {
+        padding: 20px;
+    }
+}
+
+/* 頁腳 (Footer) */
+.app-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+
+.app-footer p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+/* =========================================
+   發票模擬預覽樣式 (Invoice Preview Styles)
+   設計目標：模仿傳統紙本發票風格 (Paper Style)
+   ========================================= */
+
+/* Invoice Preview - Scaled Version */
+/* Invoice Preview - Scaled Version */
+.invoice-preview-section {
+    width: 100%;
+    /* Keep overflow hidden to clip any scaling artifacts if necessary, 
+       but standard Card padding (30px) will apply now. */
+    overflow: hidden;
+}
+
+.invoice-paper {
+    background: #fff;
+    padding: 20px;
+    position: relative;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #000;
+
+    /* Fixed base width for scaling */
+    width: 800px;
+    min-width: 800px;
+
+    /* Scaling setup */
+    transform-origin: top center;
+    /* Scale from top center */
+    margin: 0 auto;
+    display: block;
+    /* transition: moved to .ready state */
+}
+
+.invoice-border {
+    border: 4px solid #4338ca;
+    /* 模擬實體發票的邊框風格 */
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+}
+
+/* 標題區塊 (Header Section) */
+.inv-header {
+    border-bottom: 2px solid #000000;
+    padding-bottom: 12px;
+    margin-bottom: 0;
+}
+
+.inv-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.inv-code,
+.inv-code-right {
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.inv-title {
+    text-align: center;
+    flex: 1;
+}
+
+.inv-title h3 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    letter-spacing: 4px;
+}
+
+.inv-date {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #444;
+    /* 標準印刷色 */
+}
+
+.inv-date span {
+    color: #4338ca;
+    /* 模擬手寫或列印的藍色墨水 */
+    font-weight: bold;
+    margin: 0 4px;
+    font-size: 1.2rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* 買受人與地址欄位 (Buyer & Addr Rows) */
+.inv-buyer-row,
+.inv-addr-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.inv-buyer-row {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.inv-buyer-row .label,
+.inv-addr-row .label {
+    color: #000;
+    /* 黑色標籤文字 */
+    font-weight: bold;
+    min-width: 60px;
+}
+
+.inv-buyer-row .value,
+.inv-addr-row .value {
+    color: #4338ca;
+    /* 藍色墨水 */
+    font-weight: normal;
+    font-family: 'Courier New', Courier, monospace;
+    /* 手寫/打字機風格 */
+    border-bottom: 1px solid #fca5a5;
+    /* 底部橫線 */
+    padding: 0 8px;
+    flex: 1;
+    min-height: 24px;
+}
+
+.inv-buyer-row .value {
+    min-width: 100px;
+}
+
+.inv-addr-row .decoration-line {
+    border-bottom: 1px solid #fca5a5;
+    flex: 1;
+}
+
+/* 表格主體 (Body Table) */
+.inv-body {
+    border: 2px solid #000;
+    border-top: none;
+    /* 頂部已有標題分隔線，故移除上邊框 */
+    /* 傳統發票格線通常為黑色 */
+    margin-bottom: 12px;
+}
+
+.inv-row {
+    display: flex;
+    border-bottom: 1px solid #000;
+}
+
+.inv-row:last-child {
+    border-bottom: none;
+}
+
+.inv-row.header {
+    background: transparent;
+    font-weight: bold;
+    text-align: center;
+}
+
+.inv-row.header div {
+    padding: 6px 4px;
+}
+
+.inv-row.content {
+    height: 36px;
+    align-items: center;
+}
+
+.inv-row.content.empty {
+    height: 24px;
+    /* 填充空白行 */
+}
+
+/* 表格欄位設定 (Columns) */
+.col-name {
+    flex: 2;
+    border-right: 1px solid #000;
+    padding: 0 4px;
+}
+
+.col-qty {
+    width: 60px;
+    border-right: 1px solid #000;
+    text-align: center;
+}
+
+.col-price {
+    width: 80px;
+    border-right: 1px solid #000;
+    text-align: right;
+    padding: 0 4px;
+}
+
+.col-amount {
+    width: 90px;
+    border-right: 1px solid #000;
+    text-align: right;
+    padding: 0 4px;
+}
+
+.col-note {
+    width: 60px;
+    text-align: center;
+}
+
+/* 手寫/打字機字體風格 (Handwriting Font Style) */
+.write-font {
+    color: #4338ca;
+    /* 藍色墨水 */
+    font-family: 'Courier New', Courier, monospace;
+    /* 打字機風格 */
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding-top: 8px !important;
+    padding-bottom: 0px !important;
+}
+
+.write-font-simple {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    position: relative;
+    top: 0px;
+}
+
+/* 二聯式標頭日期數字微調 */
+#inv-header-date-2ply .write-font-simple {
+    position: relative;
+    top: 4px;
+}
+
+/* 頁腳區塊 (Footer) */
+.inv-footer {
+    position: relative;
+    padding-right: 160px;
+    /* 預留蓋章處空間 */
+}
+
+.inv-sum-row,
+.inv-total-chinese-row,
+.inv-tax-check-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.inv-sum-row .label,
+.inv-total-chinese-row .label,
+.inv-tax-check-row .label {
+    font-weight: bold;
+}
+
+.inv-total-chinese-row .value {
+    font-size: 1.2rem;
+    margin-left: 8px;
+    letter-spacing: 1px;
+}
+
+/* 核取方塊群組 (Checkboxes) */
+.checkbox-group {
+    display: flex;
+    gap: 12px;
+    margin-left: 8px;
+}
+
+.cb-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.cb-item .box {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #000;
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 1;
+    color: #4338ca;
+    /* 藍色勾選符號 */
+    font-weight: bold;
+}
+
+/* 蓋章區域 (Stamp Area) */
+.stamp-area {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 150px;
+    text-align: center;
+}
+
+.stamp-text {
+    font-size: 0.7rem;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.stamp-box {
+    width: 100%;
+    height: 80px;
+    border: 2px solid #4338ca;
+    /* 藍色印章邊框 */
+    color: #4338ca;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 4px;
+    opacity: 0.8;
+}
+
+/* 響應式調整 (Responsive) */
+@media (max-width: 500px) {
+    .invoice-preview-section {
+        overflow-x: auto;
+        /* 若寬度不足則允許橫向捲動 */
+    }
+
+    .invoice-border {
+        min-width: 400px;
+        /* 強制最小寬度以保持發票版型 */
+    }
+}
+
+/* 中文大寫數字垂直對齊修正 */
+.chn-digit {
+    transform: translateY(-3px);
+}
+
+/* 中文數字刪除線邏輯 (Strikethrough Logic) */
+.chn-cell {
+    position: relative;
+    /* 確保刪除線相對於儲存格定位 */
+}
+
+/* 刪除線樣式 (目前為靛藍色) */
+.chn-cell.chn-strike::after {
+    content: '';
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    top: 50%;
+    height: 4px;
+    /* 線條厚度 */
+    background-color: #4338ca;
+    /* 使用靛藍色以配合發票墨水顏色 */
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+
+/* =========================================
+   三聯式發票預覽專用樣式 (3-Ply Invoice Styles)
+   與 CSS Grid 佈局搭配使用
+   ========================================= */
+
+/* 標題調整 (Header Adjustments) */
+.inv-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.inv-title-section {
+    text-align: center;
+    flex: 1;
+}
+
+.inv-date-line {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.inv-date-line span {
+    color: #4338ca;
+    font-weight: bold;
+    margin: 0 4px;
+}
+
+.inv-track {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    letter-spacing: 2px;
+}
+
+.inv-format {
+    font-size: 1rem;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+/* 買受人區塊網格 (Buyer Grid) */
+.inv-buyer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.ib-row {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.ib-row.wide {
+    width: 100%;
+}
+
+.ib-row .label {
+    color: #f87171;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.ib-row .value {
+    color: #4338ca;
+}
+
+/* 統編方格 (UBN Boxes) */
+.ubn-boxes {
+    display: flex;
+    border: 1px solid #f87171;
+}
+
+.ubn-boxes span {
+    width: 24px;
+    height: 28px;
+    border-right: 1px solid #f87171;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4338ca;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2rem;
+}
+
+.ubn-boxes span:last-child {
+    border-right: none;
+}
+
+/* 頁腳勾選符號 (Footer Check Marks) */
+.check-mark {
+    color: #4338ca;
+    font-weight: bold;
+    margin-left: 2px;
+    width: 14px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* 修正自動完成選單被遮擋的層級問題 */
+.buyer-section {
+    position: relative;
+    z-index: 50;
+}
+
+.calculator-section {
+    position: relative;
+    z-index: 10;
+}
+
+/* 工具列按鈕樣式 */
+.tool-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tool-btn:hover {
+    background: #f8fafc;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.tool-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+
+
+
+
+/* Style Tax Amount placeholder to look like a label inside */
+#display-tax-amount::placeholder {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 1rem;
+    opacity: 1;
+}
+
+/* Scaling Container Wrapper */
+.invoice-scale-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    transform-origin: top center;
+    opacity: 0;
+    /* Hide initially to prevent jump */
+}
+
+.invoice-preview-section.ready .invoice-scale-container {
+    opacity: 1;
+    transition: height 0.3s ease, opacity 0.3s ease;
+}
+
+.invoice-preview-section.ready .invoice-paper {
+    transition: transform 0.3s ease;
+}
+
+/* --- Print Styles --- */
+/* =========================================
+   暫存與紀錄功能樣式 (Restored Styles from style_history.css)
+   ========================================= */
+
+/* 主要操作按鈕 (Primary Action Button) */
+.btn-primary-action {
+    width: 100%;
+    height: 56px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+}
+
+.btn-primary-action:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
+}
+
+.btn-primary-action:active {
+    transform: translateY(0);
+}
+
+/* 歷史紀錄區塊 (History Section) */
+.history-section {
+    position: relative;
+    /* max-height removed to allow growth */
+    display: flex;
+    flex-direction: column;
+}
+
+.text-btn-danger {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.text-btn-danger:hover {
+    background: #fee2e2;
+}
+
+.history-list-container {
+    /* overflow-y removed */
+    margin: 0 -20px;
+    /* 貼合卡片邊緣 */
+    padding: 0 20px;
+    flex: 1;
+}
+
+.history-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 20px 14px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.history-item:hover {
+    background: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.history-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.h-top-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.h-tag {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.h-tag.company {
+    background-color: #e0e7ff;
+    /* indigo-100 */
+    color: #4338ca;
+    /* indigo-700 */
+}
+
+.h-tag.individual {
+    background-color: #fce7f3;
+    /* pink-100 */
+    color: #be185d;
+    /* pink-700 */
+}
+
+.h-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.h-name {
+    font-weight: 500;
+    color: #64748b;
+    /* 區隔顏色：改為灰色 */
+}
+
+.h-amount {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.btn-delete {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+.btn-delete:hover {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 24px;
+    font-size: 0.95rem;
+    /* 虛線邊框增加層次 */
+    border: 2px dashed #e2e8f0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 匯總頁腳 (Summary Footer) */
+.history-summary-footer {
+    margin-top: 10px;
+    padding-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 24px;
+    align-items: flex-end;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* history group header */
+.history-group-header {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #64748b;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    padding-left: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* To push button to right */
+}
+
+/* Apply the bar to the span (text) so it stays attached */
+.history-group-header>span {
+    display: flex;
+    align-items: center;
+}
+
+.history-group-header>span::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 14px;
+    background-color: #cbd5e1;
+    margin-right: 8px;
+    border-radius: 2px;
+}
+
+.btn-clear-group {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-clear-group:hover {
+    background: #fee2e2;
+}
+
+@media (max-width: 480px) {
+    .history-summary-footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .summary-item {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.summary-item .label {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.summary-item .value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    font-family: 'Inter', sans-serif;
+    line-height: 1;
+}
+
+.summary-item .value.md-red {
+    color: #ef4444;
+}
+
+.summary-item .value.lg-strong {
+    font-size: 1.3rem;
+    color: var(--primary);
+}
+
+
+/* --- 複製與清空 Icon 按鈕樣式 (更敏捷自然之 120ms 微互動轉場) --- */
+.btn-icon-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    width: 60px;
+    height: 56px;
+    /* Match height of primary button */
+    cursor: pointer;
+    transition: background 0.12s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.12s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.12s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.12s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.12s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+}
+
+.btn-icon-action:hover {
+    background: #eff6ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-icon-action:active {
+    transform: translateY(1px) scale(0.97);
+    box-shadow: none;
+}
+
+.btn-icon-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #f8fafc;
+    color: #cbd5e1;
+    border-color: #cbd5e1;
+    box-shadow: none;
+    pointer-events: none;
+}
+
+
+/* --- 底部留白微調 (Bottom Spacing Adjustment) --- */
+/* 針對買受人與歷史紀錄區塊，精準控制底部 */
+.buyer-section.card {
+    padding-bottom: 37px;
+}
+
+.buyer-section .buyer-inputs-container>.input-float-group:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================================
+   Quick Chips 膠囊標籤樣式 (7px 圓角與微動畫)
+   ========================================= */
+.quick-chip-add-btn {
+    background: transparent;
+    border: none;
+    color: #6366f1;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.quick-chip-add-btn:hover {
+    background: #e0e7ff;
+}
+
+.quick-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    padding: 3px 10px;
+    border-radius: 7px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.quick-chip:hover {
+    background: #e0e7ff;
+    border-color: #c7d2fe;
+    color: #4338ca;
+    transform: translateY(-1px);
+}
+
+.quick-chip .chip-del {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    font-size: 10px;
+    color: #94a3b8;
+    margin-left: 2px;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.quick-chip .chip-del:hover {
+    background: #ef4444;
+    color: #ffffff;
+    opacity: 1;
+}
+
+.chip-toggle-btn.active {
+    background: #e0e7ff !important;
+    color: #4338ca !important;
+    border-color: #6366f1 !important;
+}
+
+.chip-toggle-btn.inactive {
+    background: #f1f5f9 !important;
+    color: #94a3b8 !important;
+    border-color: #cbd5e1 !important;
+}

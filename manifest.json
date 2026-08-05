@@ -1,0 +1,18 @@
+{
+  "short_name": "發票小救星",
+  "name": "手寫發票小救星 — 台灣發票試算與預覽工具",
+  "description": "專為台灣手寫發票設計的輔助工具，提供統編查詢、營業稅試算、金額大寫轉換與擬真發票預覽。",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "display": "standalone",
+  "orientation": "portrait"
+}
